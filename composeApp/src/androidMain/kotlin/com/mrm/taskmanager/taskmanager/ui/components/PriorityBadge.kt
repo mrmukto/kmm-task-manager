@@ -24,21 +24,20 @@ import com.mrm.taskmanager.taskmanager.ui.theme.SurfaceLight
 
 @Composable
 fun PriorityBadge(priority: Priority) {
-    // Pick background / text color and label per priority
     val (bg, fg, label) = when (priority) {
         Priority.LOW -> Triple(
-            SurfaceLight,          // soft white/grey
-            Color.Black,           // readable dark text
+            SurfaceLight,
+            Color.Black,
             "Low"
         )
         Priority.MEDIUM -> Triple(
-            PrimaryLight,          // your blue
-            Color.White,           // white text
+            PrimaryLight,
+            Color.White,
             "Medium"
         )
         Priority.HIGH -> Triple(
-            ErrorRed,              // strong red
-            Color.White,           // white text
+            ErrorRed,
+            Color.White,
             "High"
         )
     }
@@ -52,7 +51,6 @@ fun PriorityBadge(priority: Priority) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            // Small colored dot
             Box(
                 modifier = Modifier
                     .size(8.dp)
