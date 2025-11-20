@@ -5,8 +5,8 @@ import com.mrm.taskmanager.taskmanager.data.domain.model.Task
 import com.mrm.taskmanager.taskmanager.data.domain.usecase.SortMode
 
 data class TaskUiState(
-    val tasks: List<Task> = emptyList(),          // all tasks from DB
-    val visibleTasks: List<Task> = emptyList(),   // after search/filter/sort
+    val tasks: List<Task> = emptyList(),
+    val visibleTasks: List<Task> = emptyList(),
 
     val searchQuery: String = "",
     val filterOptions: FilterOptions = FilterOptions(),

@@ -1,7 +1,6 @@
 package com.mrm.taskmanager.taskmanager.ui.screens
 
 
-
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
@@ -39,27 +38,23 @@ fun TaskListScreen(
 ) {
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Task Manager") },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    titleContentColor = MaterialTheme.colorScheme.onSurface,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-                    actionIconContentColor = MaterialTheme.colorScheme.onSurface
-                )
+        CenterAlignedTopAppBar(
+            title = { Text("Task Manager") }, colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+                titleContentColor = MaterialTheme.colorScheme.onSurface,
+                navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                actionIconContentColor = MaterialTheme.colorScheme.onSurface
             )
+        )
 
 
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onAddTaskClick,
-                containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-            ) {
-                Icon(Icons.Default.Add, contentDescription = "Add task")
-            }
-        },
-        containerColor = MaterialTheme.colorScheme.background
+    }, floatingActionButton = {
+        FloatingActionButton(
+            onClick = onAddTaskClick, containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+        ) {
+            Icon(Icons.Default.Add, contentDescription = "Add task")
+        }
+    }, containerColor = MaterialTheme.colorScheme.background
     ) { padding ->
         Column(
             modifier = Modifier
@@ -69,15 +64,12 @@ fun TaskListScreen(
         ) {
             // 🔹 Top card: search + filter/sort
             Surface(
-                shape = MaterialTheme.shapes.large,
-                tonalElevation = 3.dp,
-                modifier = Modifier.fillMaxWidth()
+                shape = MaterialTheme.shapes.large, tonalElevation = 3.dp, modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(5.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                        .padding(5.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     SearchBar(
                         query = state.searchQuery,
@@ -108,12 +100,10 @@ fun TaskListScreen(
 
             if (state.visibleTasks.isEmpty() && !state.isLoading) {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                    modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        "No tasks yet. Tap + to add one.",
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        "No tasks yet. Tap + to add one.", color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             } else {
@@ -125,15 +115,13 @@ fun TaskListScreen(
                         TaskItem(
                             task = task,
                             onClick = { task.id?.let(onTaskClick) },
-                            onDeleteClick = { task.id?.let(onDeleteTask) }
-                        )
+                            onDeleteClick = { task.id?.let(onDeleteTask) })
                     }
                 }
             }
         }
     }
 }
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -145,19 +133,14 @@ private fun FilterSortRow(
     onSortModeChange: (SortMode) -> Unit
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(3.dp)
+        modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(3.dp)
     ) {
         StatusFilter(
-            currentFilter = currentFilter,
-            onFilterChange = onFilterChange,
-            modifier = Modifier.weight(1f)
+            currentFilter = currentFilter, onFilterChange = onFilterChange, modifier = Modifier.weight(1f)
         )
 
         SortDropdown(
-            currentSortMode = currentSortMode,
-            onSortModeChange = onSortModeChange,
-            modifier = Modifier.weight(1f)
+            currentSortMode = currentSortMode, onSortModeChange = onSortModeChange, modifier = Modifier.weight(1f)
         )
     }
 }
@@ -166,16 +149,12 @@ private fun FilterSortRow(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SortDropdown(
-    currentSortMode: SortMode,
-    onSortModeChange: (SortMode) -> Unit,
-    modifier: Modifier = Modifier
+    currentSortMode: SortMode, onSortModeChange: (SortMode) -> Unit, modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
-        modifier = modifier
+        expanded = expanded, onExpandedChange = { expanded = !expanded }, modifier = modifier
     ) {
         val label = when (currentSortMode) {
             SortMode.CREATED_AT_DESC -> "Newest"
@@ -199,37 +178,23 @@ private fun SortDropdown(
         )
 
         ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
-        ) {
-            DropdownMenuItem(
-                text = { Text("Newest first") },
-                onClick = {
-                    onSortModeChange(SortMode.CREATED_AT_DESC)
-                    expanded = false
-                }
-            )
-            DropdownMenuItem(
-                text = { Text("Oldest first") },
-                onClick = {
-                    onSortModeChange(SortMode.CREATED_AT_ASC)
-                    expanded = false
-                }
-            )
-            DropdownMenuItem(
-                text = { Text("Priority") },
-                onClick = {
-                    onSortModeChange(SortMode.PRIORITY)
-                    expanded = false
-                }
-            )
-            DropdownMenuItem(
-                text = { Text("Status") },
-                onClick = {
-                    onSortModeChange(SortMode.STATUS)
-                    expanded = false
-                }
-            )
+            expanded = expanded, onDismissRequest = { expanded = false }) {
+            DropdownMenuItem(text = { Text("Newest first") }, onClick = {
+                onSortModeChange(SortMode.CREATED_AT_DESC)
+                expanded = false
+            })
+            DropdownMenuItem(text = { Text("Oldest first") }, onClick = {
+                onSortModeChange(SortMode.CREATED_AT_ASC)
+                expanded = false
+            })
+            DropdownMenuItem(text = { Text("Priority") }, onClick = {
+                onSortModeChange(SortMode.PRIORITY)
+                expanded = false
+            })
+            DropdownMenuItem(text = { Text("Status") }, onClick = {
+                onSortModeChange(SortMode.STATUS)
+                expanded = false
+            })
         }
     }
 }
@@ -238,16 +203,12 @@ private fun SortDropdown(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun StatusFilter(
-    currentFilter: FilterOptions,
-    onFilterChange: (FilterOptions) -> Unit,
-    modifier: Modifier = Modifier
-)  {
+    currentFilter: FilterOptions, onFilterChange: (FilterOptions) -> Unit, modifier: Modifier = Modifier
+) {
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
-        modifier = modifier
+        expanded = expanded, onExpandedChange = { expanded = !expanded }, modifier = modifier
     ) {
         val label = when (currentFilter.status) {
             null -> "All"
@@ -271,42 +232,27 @@ private fun StatusFilter(
         )
 
         ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
-        ) {
-            DropdownMenuItem(
-                text = { Text("All") },
-                onClick = {
-                    onFilterChange(
-                        FilterOptions(
-                            status = null,
-                            priority = currentFilter.priority
-                        )
+            expanded = expanded, onDismissRequest = { expanded = false }) {
+            DropdownMenuItem(text = { Text("All") }, onClick = {
+                onFilterChange(
+                    FilterOptions(
+                        status = null, priority = currentFilter.priority
                     )
-                    expanded = false
-                }
-            )
-            DropdownMenuItem(
-                text = { Text("TODO") },
-                onClick = {
-                    onFilterChange(currentFilter.copy(status = TaskStatus.TODO))
-                    expanded = false
-                }
-            )
-            DropdownMenuItem(
-                text = { Text("In Progress") },
-                onClick = {
-                    onFilterChange(currentFilter.copy(status = TaskStatus.IN_PROGRESS))
-                    expanded = false
-                }
-            )
-            DropdownMenuItem(
-                text = { Text("Done") },
-                onClick = {
-                    onFilterChange(currentFilter.copy(status = TaskStatus.DONE))
-                    expanded = false
-                }
-            )
+                )
+                expanded = false
+            })
+            DropdownMenuItem(text = { Text("TODO") }, onClick = {
+                onFilterChange(currentFilter.copy(status = TaskStatus.TODO))
+                expanded = false
+            })
+            DropdownMenuItem(text = { Text("In Progress") }, onClick = {
+                onFilterChange(currentFilter.copy(status = TaskStatus.IN_PROGRESS))
+                expanded = false
+            })
+            DropdownMenuItem(text = { Text("Done") }, onClick = {
+                onFilterChange(currentFilter.copy(status = TaskStatus.DONE))
+                expanded = false
+            })
         }
     }
 }

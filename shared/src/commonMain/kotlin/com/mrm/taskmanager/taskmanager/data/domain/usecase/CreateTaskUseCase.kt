@@ -10,7 +10,6 @@ import kotlinx.datetime.Instant
 class CreateTaskUseCase(
     private val repository: TaskRepository
 ) {
-
     suspend operator fun invoke(
         title: String,
         description: String? = null,

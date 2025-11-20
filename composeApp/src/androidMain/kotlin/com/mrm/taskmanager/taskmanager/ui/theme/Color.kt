@@ -11,7 +11,7 @@ val BackgroundLight = Color(0xFFF5F5F5)
 val SurfaceLight = Color(0xFFFFFFFF)
 
 val ErrorRed = Color(0xFFB3261E)
-// Extra for statuses
+
 val StatusInProgressYellow = Color(0xFFCCAE4E)
 val StatusDoneGreen = Color(0xFF4CAF50)
 val todoColor = Color(0xFF3F51B5)

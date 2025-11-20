@@ -34,13 +34,11 @@ class TaskViewModel(
     private val sortTasksUseCase: SortTasksUseCase
 ) {
 
-    // KMM-friendly "viewModelScope"
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     private val _state = MutableStateFlow(TaskUiState())
     val state: StateFlow<TaskUiState> = _state
 
-    // Full list from DB – we keep it separately for search/filter/sort
     private var allTasks: List<Task> = emptyList()
 
     init {
@@ -58,8 +56,6 @@ class TaskViewModel(
             }
         }
     }
-
-    // ---------- public API for UI ----------
 
     fun onSearchQueryChange(query: String) {
         _state.update { it.copy(searchQuery = query) }

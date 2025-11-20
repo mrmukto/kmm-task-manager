@@ -28,9 +28,7 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEditTaskScreen(
-    taskId: Long?,
-    viewModel: AndroidTaskViewModel,
-    navController: NavController
+    taskId: Long?, viewModel: AndroidTaskViewModel, navController: NavController
 ) {
     var isLoaded by remember { mutableStateOf(false) }
 
@@ -57,7 +55,7 @@ fun AddEditTaskScreen(
                     priority = it.priority
                     status = it.status
                     createdAt = it.createdAt
-                    dueDate = it.dueDate   // load existing due date if any
+                    dueDate = it.dueDate
                 }
                 isLoaded = true
             }
@@ -68,16 +66,14 @@ fun AddEditTaskScreen(
 
     val createdLabel = remember(createdAt) {
         createdAt?.let {
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                .withZone(ZoneId.systemDefault())
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").withZone(ZoneId.systemDefault())
             "Created at: " + formatter.format(it.toJavaInstant())
         } ?: ""
     }
 
     val dueDateLabel = remember(dueDate) {
         dueDate?.let {
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                .withZone(ZoneId.systemDefault())
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault())
             formatter.format(it.toJavaInstant())
         } ?: "No due date"
     }
@@ -85,27 +81,22 @@ fun AddEditTaskScreen(
     val datePickerState = rememberDatePickerState()
 
     if (isDatePickerOpen) {
-        DatePickerDialog(
-            onDismissRequest = { isDatePickerOpen = false },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        val millis = datePickerState.selectedDateMillis
-                        if (millis != null) {
-                            dueDate = Instant.fromEpochMilliseconds(millis)
-                        }
-                        isDatePickerOpen = false
+        DatePickerDialog(onDismissRequest = { isDatePickerOpen = false }, confirmButton = {
+            TextButton(
+                onClick = {
+                    val millis = datePickerState.selectedDateMillis
+                    if (millis != null) {
+                        dueDate = Instant.fromEpochMilliseconds(millis)
                     }
-                ) {
-                    Text("OK")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { isDatePickerOpen = false }) {
-                    Text("Cancel")
-                }
+                    isDatePickerOpen = false
+                }) {
+                Text("OK")
             }
-        ) {
+        }, dismissButton = {
+            TextButton(onClick = { isDatePickerOpen = false }) {
+                Text("Cancel")
+            }
+        }) {
             DatePicker(state = datePickerState)
         }
     }
@@ -113,16 +104,13 @@ fun AddEditTaskScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (taskId == null) "Add Task" else "Edit Task") }
-            )
-        }
-    ) { padding ->
+                title = { Text(if (taskId == null) "Add Task" else "Edit Task") })
+        }) { padding ->
         if (!isLoaded) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(padding),
-                contentAlignment = Alignment.Center
+                    .padding(padding), contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()
             }
@@ -138,26 +126,20 @@ fun AddEditTaskScreen(
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     OutlinedTextField(
-                        value = title,
-                        onValueChange = {
-                            title = it
-                            if (titleError != null && it.isNotBlank()) {
-                                titleError = null
-                            }
-                        },
-                        label = { Text("Title *") },
-                        isError = titleError != null,
-                        supportingText = {
-                            if (titleError != null) {
-                                Text(
-                                    text = titleError!!,
-                                    color = MaterialTheme.colorScheme.error,
-                                    style = MaterialTheme.typography.labelSmall
-                                )
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true
+                        value = title, onValueChange = {
+                        title = it
+                        if (titleError != null && it.isNotBlank()) {
+                            titleError = null
+                        }
+                    }, label = { Text("Title *") }, isError = titleError != null, supportingText = {
+                        if (titleError != null) {
+                            Text(
+                                text = titleError!!,
+                                color = MaterialTheme.colorScheme.error,
+                                style = MaterialTheme.typography.labelSmall
+                            )
+                        }
+                    }, modifier = Modifier.fillMaxWidth(), singleLine = true
                     )
 
                     OutlinedTextField(
@@ -174,9 +156,7 @@ fun AddEditTaskScreen(
                 var priorityExpanded by remember { mutableStateOf(false) }
 
                 ExposedDropdownMenuBox(
-                    expanded = priorityExpanded,
-                    onExpandedChange = { priorityExpanded = !priorityExpanded }
-                ) {
+                    expanded = priorityExpanded, onExpandedChange = { priorityExpanded = !priorityExpanded }) {
                     OutlinedTextField(
                         value = priority.name,
                         onValueChange = {},
@@ -187,28 +167,20 @@ fun AddEditTaskScreen(
                             .fillMaxWidth()
                     )
                     ExposedDropdownMenu(
-                        expanded = priorityExpanded,
-                        onDismissRequest = { priorityExpanded = false }
-                    ) {
+                        expanded = priorityExpanded, onDismissRequest = { priorityExpanded = false }) {
                         Priority.values().forEach { p ->
-                            DropdownMenuItem(
-                                text = { Text(p.name) },
-                                onClick = {
-                                    priority = p
-                                    priorityExpanded = false
-                                }
-                            )
+                            DropdownMenuItem(text = { Text(p.name) }, onClick = {
+                                priority = p
+                                priorityExpanded = false
+                            })
                         }
                     }
                 }
 
-                // Status selector
                 var statusExpanded by remember { mutableStateOf(false) }
 
                 ExposedDropdownMenuBox(
-                    expanded = statusExpanded,
-                    onExpandedChange = { statusExpanded = !statusExpanded }
-                ) {
+                    expanded = statusExpanded, onExpandedChange = { statusExpanded = !statusExpanded }) {
                     OutlinedTextField(
                         value = status.name,
                         onValueChange = {},
@@ -219,17 +191,12 @@ fun AddEditTaskScreen(
                             .fillMaxWidth()
                     )
                     ExposedDropdownMenu(
-                        expanded = statusExpanded,
-                        onDismissRequest = { statusExpanded = false }
-                    ) {
+                        expanded = statusExpanded, onDismissRequest = { statusExpanded = false }) {
                         TaskStatus.values().forEach { s ->
-                            DropdownMenuItem(
-                                text = { Text(s.name) },
-                                onClick = {
-                                    status = s
-                                    statusExpanded = false
-                                }
-                            )
+                            DropdownMenuItem(text = { Text(s.name) }, onClick = {
+                                status = s
+                                statusExpanded = false
+                            })
                         }
                     }
                 }
@@ -241,8 +208,7 @@ fun AddEditTaskScreen(
                     label = { Text("Due date (optional)") },
                     leadingIcon = {
                         Icon(
-                            imageVector = Icons.Default.Event,
-                            contentDescription = null
+                            imageVector = Icons.Default.Event, contentDescription = null
                         )
                     },
                     modifier = Modifier
@@ -263,7 +229,6 @@ fun AddEditTaskScreen(
                     }
                 }
 
-                // Created timestamp only for existing task
                 if (taskId != null && createdLabel.isNotBlank()) {
                     Text(
                         text = createdLabel,
@@ -294,7 +259,6 @@ fun AddEditTaskScreen(
                             successMessage = "Task added successfully"
                             showSuccessDialog = true
                         } else {
-                            // Update – keep original createdAt
                             viewModel.loadTask(taskId) { existing ->
                                 if (existing != null) {
                                     val updated = existing.copy(
@@ -310,32 +274,25 @@ fun AddEditTaskScreen(
                                 }
                             }
                         }
-                    },
-                    modifier = Modifier.fillMaxWidth()
+                    }, modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(if (taskId == null) "Save Task" else "Update Task")
                 }
             }
         }
         if (showSuccessDialog) {
-            AlertDialog(
-                onDismissRequest = {
-                    showSuccessDialog = false
-                    navController.popBackStack()
-                },
-                confirmButton = {
-                    TextButton(
-                        onClick = {
-                            showSuccessDialog = false
-                            navController.popBackStack()
-                        }
-                    ) {
-                        Text("OK")
-                    }
-                },
-                title = { Text("Success") },
-                text = { Text(successMessage) }
-            )
+            AlertDialog(onDismissRequest = {
+                showSuccessDialog = false
+                navController.popBackStack()
+            }, confirmButton = {
+                TextButton(
+                    onClick = {
+                        showSuccessDialog = false
+                        navController.popBackStack()
+                    }) {
+                    Text("OK")
+                }
+            }, title = { Text("Success") }, text = { Text(successMessage) })
         }
     }
 }

@@ -44,7 +44,6 @@ fun TaskItem(
         }
     }
 
-    // 🎨 Card background + text color based on priority
     val (containerColor, contentColor) = when (task.priority) {
         Priority.HIGH -> (
                 MaterialTheme.colorScheme.errorContainer
@@ -75,11 +74,9 @@ fun TaskItem(
                 .padding(horizontal = 12.dp, vertical = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // Left: main content
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                // Title + status chip
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -105,7 +102,6 @@ fun TaskItem(
 
                 Spacer(modifier = Modifier.height(6.dp))
 
-                // Priority + created time
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -122,7 +118,6 @@ fun TaskItem(
                 }
             }
 
-            // Delete icon (red)
             IconButton(
                 onClick = onDeleteClick,
                 colors = IconButtonDefaults.iconButtonColors(

@@ -17,8 +17,6 @@ fun TaskManagerTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colorScheme = LightColors,
-        typography = TaskTypography,
-        content = content
+        colorScheme = LightColors, typography = TaskTypography, content = content
     )
 }

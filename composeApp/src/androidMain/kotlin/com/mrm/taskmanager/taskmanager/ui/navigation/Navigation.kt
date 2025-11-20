@@ -1,6 +1,8 @@
 package com.mrm.taskmanager.taskmanager.ui.navigation
 
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -19,6 +21,7 @@ object Routes {
     const val ARG_TASK_ID = "taskId"
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TaskNavHost(
     navController: NavHostController,

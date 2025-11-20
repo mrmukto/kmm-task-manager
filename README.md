@@ -10,6 +10,7 @@ The core business logic, data layer, and use cases live in a **shared KMM module
 <p align="center">
   <img src="readme_image/home.png" alt="Home screen" width="22%" />
   <img src="readme_image/add_task.png" alt="Add task screen" width="22%" />
+  <img src="readme_image/update.jpg" alt="Update task screen" width="22%" />
 </p>
 
 ---

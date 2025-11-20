@@ -20,15 +20,11 @@ class AndroidTaskViewModel(
 
     val state: StateFlow<TaskUiState> = sharedViewModel.state
 
-    // Forward all API calls to shared ViewModel
-    fun onSearchQueryChange(query: String) =
-        sharedViewModel.onSearchQueryChange(query)
+    fun onSearchQueryChange(query: String) = sharedViewModel.onSearchQueryChange(query)
 
-    fun onFilterChange(options: FilterOptions) =
-        sharedViewModel.onFilterChange(options)
+    fun onFilterChange(options: FilterOptions) = sharedViewModel.onFilterChange(options)
 
-    fun onSortModeChange(sortMode: SortMode) =
-        sharedViewModel.onSortModeChange(sortMode)
+    fun onSortModeChange(sortMode: SortMode) = sharedViewModel.onSortModeChange(sortMode)
 
     fun createTask(
         title: String,
@@ -37,24 +33,16 @@ class AndroidTaskViewModel(
         status: TaskStatus = TaskStatus.TODO,
         dueDate: Instant? = null
     ) = sharedViewModel.createTask(
-        title = title,
-        description = description,
-        priority = priority,
-        status = status,
-        dueDate = dueDate
+        title = title, description = description, priority = priority, status = status, dueDate = dueDate
     )
 
-    fun updateTask(task: Task) =
-        sharedViewModel.updateTask(task)
+    fun updateTask(task: Task) = sharedViewModel.updateTask(task)
 
-    fun deleteTask(id: Long) =
-        sharedViewModel.deleteTask(id)
+    fun deleteTask(id: Long) = sharedViewModel.deleteTask(id)
 
-    fun loadTask(id: Long, onLoaded: (Task?) -> Unit) =
-        sharedViewModel.loadTask(id, onLoaded)
+    fun loadTask(id: Long, onLoaded: (Task?) -> Unit) = sharedViewModel.loadTask(id, onLoaded)
 
-    fun clearError() =
-        sharedViewModel.clearError()
+    fun clearError() = sharedViewModel.clearError()
 
     override fun onCleared() {
         super.onCleared()
@@ -62,7 +50,6 @@ class AndroidTaskViewModel(
     }
 }
 
-// Factory to create AndroidTaskViewModel with Context
 class AndroidTaskViewModelFactory(
     private val appContext: Context
 ) : ViewModelProvider.Factory {

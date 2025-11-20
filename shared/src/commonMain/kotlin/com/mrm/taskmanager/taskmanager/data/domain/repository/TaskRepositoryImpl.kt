@@ -1,7 +1,6 @@
 package com.mrm.taskmanager.taskmanager.data.domain.repository
 
 
-
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.kmm.taskmanager.database.TaskDatabase
@@ -20,23 +19,14 @@ class TaskRepositoryImpl(
     private val db: TaskDatabase
 ) : TaskRepository {
 
-    // ✅ Use the actual generated queries property:
-    // public val taskDatabaseQueries: TaskDatabaseQueries
     private val queries = db.taskDatabaseQueries
 
     override fun observeTasks(): Flow<List<Task>> {
-        return queries
-            .selectAll()
-            .asFlow()
-            .mapToList(Dispatchers.IO)
-            .map { list -> list.map { it.toDomain() } }
+        return queries.selectAll().asFlow().mapToList(Dispatchers.IO).map { list -> list.map { it.toDomain() } }
     }
 
     override suspend fun getTaskById(id: Long): Task? {
-        return queries
-            .selectById(id)
-            .executeAsOneOrNull()
-            ?.toDomain()
+        return queries.selectById(id).executeAsOneOrNull()?.toDomain()
     }
 
     override suspend fun createTask(task: Task) {
@@ -51,7 +41,7 @@ class TaskRepositoryImpl(
     }
 
     override suspend fun updateTask(task: Task) {
-        val id = task.id ?: return  // or throw IllegalArgumentException
+        val id = task.id ?: return
 
         queries.updateTask(
             title = task.title,
@@ -66,8 +56,6 @@ class TaskRepositoryImpl(
     override suspend fun deleteTask(id: Long) {
         queries.deleteTask(id)
     }
-
-    // ---------- Mapping helpers ----------
 
     private fun Tasks.toEntity(): TaskEntity {
         return TaskEntity(

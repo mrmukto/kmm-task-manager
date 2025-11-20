@@ -3,7 +3,7 @@ package com.mrm.taskmanager.taskmanager.data.domain.model
 import kotlinx.datetime.Instant
 
 data class Task(
-    val id: Long? = null,              // null when creating a new task
+    val id: Long? = null,
     val title: String,
     val description: String? = null,
     val priority: Priority = Priority.MEDIUM,

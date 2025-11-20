@@ -1,5 +1,7 @@
 package com.mrm.taskmanager.taskmanager.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material3.MaterialTheme
 import com.mrm.taskmanager.taskmanager.presentation.TaskUiState
 import androidx.compose.material3.Surface
@@ -9,19 +11,17 @@ import com.mrm.taskmanager.taskmanager.ui.navigation.TaskNavHost
 import com.mrm.taskmanager.taskmanager.ui.theme.TaskManagerTheme
 import com.mrm.taskmanager.taskmanager.viewmodel.AndroidTaskViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TaskApp(
-    uiState: TaskUiState,
-    viewModel: AndroidTaskViewModel
+    uiState: TaskUiState, viewModel: AndroidTaskViewModel
 ) {
     TaskManagerTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
             val navController = rememberNavController()
 
             TaskNavHost(
-                navController = navController,
-                uiState = uiState,
-                viewModel = viewModel
+                navController = navController, uiState = uiState, viewModel = viewModel
             )
         }
     }

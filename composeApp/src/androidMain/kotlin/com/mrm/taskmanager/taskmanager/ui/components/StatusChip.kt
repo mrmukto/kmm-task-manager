@@ -18,18 +18,18 @@ import com.mrm.taskmanager.taskmanager.ui.theme.todoColor
 fun StatusChip(status: TaskStatus) {
     val (bg, fg, label) = when (status) {
         TaskStatus.TODO -> Triple(
-            todoColor,          // neutral background
-            Color.White,           // dark text
+            todoColor,
+            Color.White,
             "To Do"
         )
         TaskStatus.IN_PROGRESS -> Triple(
-            StatusInProgressYellow, // yellow
-            Color.White,            // white text
+            StatusInProgressYellow,
+            Color.White,
             "In Progress"
         )
         TaskStatus.DONE -> Triple(
-            StatusDoneGreen,        // green
-            Color.White,            // white text
+            StatusDoneGreen,
+            Color.White,
             "Done"
         )
     }
